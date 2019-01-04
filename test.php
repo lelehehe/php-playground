@@ -1,25 +1,23 @@
 <?php
 
+function unique_multidim_array($items)
+{
+    $result = array();
+    $i = 0;
+    $productIds = array();
 
-function unique_multidim_array($array, $key) { 
-    $temp_array = array(); 
-    $i = 0; 
-    $key_array = array(); 
-    
-    foreach($array as $val) { 
-        if (!in_array($val[$key], $key_array)) { 
-            $key_array[$i] = $val[$key]; 
-            $temp_array[$i] = $val; 
-        } 
-        $i++; 
-    } 
-    return $temp_array; 
-} 
+    foreach ($items as $item) {
+        if (!in_array($item['product_id'], $productIds)) {
+            $productIds[$i] = $item['product_id'];
+            $result[$i] = $item;
+            $i++;
+        }
+    }
+    return $result;
+}
 
-
-
-    $dataStr = 
-   ' [
+$dataStr =
+    ' [
 {
 "pick_ticket": "ZL4B422D77",
 "product_id": "29500076",
@@ -65,10 +63,10 @@ function unique_multidim_array($array, $key) {
 "order_number": "1017046203"
 }]';
 
-$data = json_decode($dataStr, TRUE);
+$data = json_decode($dataStr, true);
 
-echo print_r($data);
-
+$result = unique_multidim_array($data, 'product_id');
+print_r($result);
 
 
 ?>
