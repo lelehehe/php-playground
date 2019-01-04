@@ -12,6 +12,9 @@ function mergeProductQuanty($items)
             $result[$item['product_id']]['quantity'] += $item['quantity'];
         }
     }
+    
+    $result = array_values($result);
+
     return $result;
 }
 
