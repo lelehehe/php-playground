@@ -1,16 +1,15 @@
 <?php
 
-function unique_multidim_array($items)
+function mergeProductQuanty($items)
 {
     $result = array();
-    $i = 0;
-    $productIds = array();
 
     foreach ($items as $item) {
-        if (!in_array($item['product_id'], $productIds)) {
-            $productIds[$i] = $item['product_id'];
-            $result[$i] = $item;
-            $i++;
+        if (!array_key_exists($item['product_id'], $result)) {
+            $result[$item['product_id']] = $item;
+        }
+        else {
+            $result[$item['product_id']]['quantity'] += $item['quantity'];
         }
     }
     return $result;
@@ -65,7 +64,7 @@ $dataStr =
 
 $data = json_decode($dataStr, true);
 
-$result = unique_multidim_array($data, 'product_id');
+$result = mergeProductQuanty($data, 'product_id');
 print_r($result);
 
 
